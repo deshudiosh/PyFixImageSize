@@ -6,3 +6,4 @@ WWW - width in pixels.
 HHH - height in pixels.
 
 To use, just drag and drop images on exe.
+Caution: Overrides original files!
