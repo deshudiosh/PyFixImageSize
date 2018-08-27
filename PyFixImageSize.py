@@ -25,7 +25,7 @@ def crop_if_needed(arg: Path):
     # if image size doesn't match it's name
     if expected_size != img.size and expected_size is not None:
         img.crop((0, 0, *expected_size)).save(fp=arg, subsampling=0, quality=100)
-        print(arg, " -> cropped")
+        click.echo(arg)
         return img
     else:
         return None
@@ -40,12 +40,12 @@ def validate_image(arg) -> Path:
 @click.command()
 @click.argument("args", nargs=-1)
 def cli(args):
+    click.echo("List of cropped images:")
+
     images = [validate_image(arg) for arg in args if validate_image(arg) is not None]
-    cropped = [crop_if_needed(img) for img in images]
+    [crop_if_needed(img) for img in images]
 
-    click.echo(str(len(cropped)) + " images cropped.")
-
-    click.confirm('Cropping done ❤️️. Happy?')
+    click.confirm('Cropping done ♥ Happy?')
 
 
 if getattr(sys, "frozen", False):
