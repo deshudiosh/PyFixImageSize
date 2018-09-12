@@ -8,7 +8,9 @@ from PIL import Image
 def find_size_in_name(name: Path):
     """" search for WWW and HHH in filename and return as tuple"""
     try:
-        size = name.stem.split("_")[-1].split("x")
+        size = name.stem.split("_")[-1]
+        size = size.split(" ")[0]
+        size = size.split("x")
         size = tuple(map(int, size))
         assert len(size) == 2
     except:
@@ -48,13 +50,23 @@ def cli(args):
     click.confirm('Cropping done ♥ Happy?')
 
 
+def test():
+    for n in [Path('C:\\Users\\pawelgrze\\Desktop\\do testu\\test_970x600.jpg'),
+              Path('C:\\Users\\pawelgrze\\Desktop\\do testu\\test_970x600 copy.jpg'),
+              Path('C:\\Users\\pawelgrze\\Desktop\\do testu\\test_970x600 copy 4.jpg')]:
+        print(find_size_in_name(n))
+
+    # cli([,
+    #      'C:\\Users\\pawelgrze\\Desktop\\do testu\\dobre_400x400.jpg',
+    #      'C:\\Users\\pawelgrze\\Desktop\\do testu\\nazwa1.jpg',
+    #      'C:\\Users\\pawelgrze\\Desktop\\do testu\\nazwa2_100_499.jpg',
+    #      'C:\\Users\\pawelgrze\\Desktop\\5490155_555x555.jpg',
+    #      'dupa.jpg'])
+
+
 if getattr(sys, "frozen", False):
     cli()
 else:
     # tests are run only if app is not frozen
-    cli(['C:\\Users\\pawelgrze\\Desktop\\do testu\\test_970x600.jpg',
-         'C:\\Users\\pawelgrze\\Desktop\\do testu\\dobre_400x400.jpg',
-         'C:\\Users\\pawelgrze\\Desktop\\do testu\\nazwa1.jpg',
-         'C:\\Users\\pawelgrze\\Desktop\\do testu\\nazwa2_100_499.jpg',
-         'C:\\Users\\pawelgrze\\Desktop\\5490155_555x555.jpg',
-         'dupa.jpg'])
+    test()
+    pass
