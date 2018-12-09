@@ -6,11 +6,15 @@ from PIL import Image
 
 
 def find_size_in_name(name: Path):
-    """" search for WWW and HHH in filename and return as tuple"""
+    """" search for WWWxHHH in filename and return as tuple"""
     try:
-        size = name.stem.split("_")[-1]
-        size = size.split(" ")[0]
-        size = size.split("x")
+        n = name.stem
+        extracted = [c if c in "1234567890x" else " " for c in n]
+        extracted = "".join(extracted).split()
+        extracted = [x for x in extracted if "x" in x]
+        extracted = extracted[0]
+
+        size = extracted.split("x")
         size = tuple(map(int, size))
         assert len(size) == 2
     except:
@@ -51,10 +55,12 @@ def cli(args):
 
 
 def test():
-    for n in [Path('C:\\Users\\pawelgrze\\Desktop\\do testu\\test_970x600.jpg'),
-              Path('C:\\Users\\pawelgrze\\Desktop\\do testu\\test_970x600 copy.jpg'),
-              Path('C:\\Users\\pawelgrze\\Desktop\\do testu\\test_970x600 copy 4.jpg')]:
+    for n in [Path('C:\\Users\\pawelgrze\\Desktop\\do testu\\test_970x600 copy 4.jpg'),
+              Path('test_970x600 (copy 4).jpg'),
+              Path('test 076x334 (1)'),
+              Path('test2_076x334 (1)')]:
         print(find_size_in_name(n))
+
 
     # cli([,
     #      'C:\\Users\\pawelgrze\\Desktop\\do testu\\dobre_400x400.jpg',
